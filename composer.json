@@ -1,0 +1,46 @@
+{
+    "name": "tcgunel/bizimhesap-b2b",
+    "description": "Bizimhesap B2b Entegrasyonu.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tolga Can GÜNEL",
+            "email": "info@mobius.studio"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "*"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "TCGunel\\BizimHesapB2b\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TCGunel\\BizimHesapB2b\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TCGunel\\BizimHesapB2b\\BizimHesapB2bServiceProvider"
+            ],
+            "aliases": {
+                "BizimHesapB2b": "BizimHesapB2b"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/paratest --processes 6",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "orchestra/testbench": "*",
+        "brianium/paratest": "*"
+    }
+}
