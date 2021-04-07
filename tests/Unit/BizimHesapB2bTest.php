@@ -12,6 +12,7 @@ use TCGunel\BizimHesapB2b\BizimHesapB2bCustomers;
 use TCGunel\BizimHesapB2b\BizimHesapB2bInventory;
 use TCGunel\BizimHesapB2b\BizimHesapB2bProducts;
 use TCGunel\BizimHesapB2b\BizimHesapB2bWarehouses;
+use TCGunel\BizimHesapB2b\Constants\InvoiceType;
 use TCGunel\BizimHesapB2b\Exceptions\BizimHesapB2bException;
 use TCGunel\BizimHesapB2b\Models\Responses\_Abstract;
 use TCGunel\BizimHesapB2b\Models\Responses\AbstractUser;
@@ -90,7 +91,7 @@ class BizimHesapB2bTest extends TestCase
 
         $invoice->firmId      = $this->token;
         $invoice->invoiceNo   = $this->faker->randomNumber(7);
-        $invoice->invoiceType = $this->faker->randomElement([3, 5]);
+        $invoice->invoiceType = $this->faker->randomElement([InvoiceType::SALE, InvoiceType::PURCHASE]);
         $invoice->note        = $this->faker->realText(254);
 
         $dates = new InvoiceDates();
