@@ -5,6 +5,7 @@ namespace TCGunel\BizimHesapB2b;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use TCGunel\BizimHesapB2b\Models\Responses\Photo;
 use TCGunel\BizimHesapB2b\Models\Responses\Product;
 
 class BizimHesapB2bProducts extends BizimHesapB2b
@@ -70,7 +71,25 @@ class BizimHesapB2bProducts extends BizimHesapB2b
 
         if (isset($collected->get("data")["products"])) {
 
-            $collected->put("products", collect($collected->get("data")["products"]));
+            $collected->put("products", collect($collected->get("data")["products"])->map(function ($product) {
+
+                if (!empty($product["photo"])) {
+
+                    $product["photo"] = collect(json_decode($product["photo"], true))->map(function ($photo) {
+
+                        return new Photo(["is_cover" => !!$photo["FlCover"], "url" => $photo["PhotoUrl"]]);
+
+
+                    })->toArray();
+
+                } else {
+
+                    $product["photo"] = [];
+
+                }
+
+                return $product;
+            }));
 
         }
 

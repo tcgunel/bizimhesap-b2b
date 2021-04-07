@@ -22,6 +22,7 @@ use TCGunel\BizimHesapB2b\Models\Requests\InvoiceAmounts;
 use TCGunel\BizimHesapB2b\Models\Requests\InvoiceCustomer;
 use TCGunel\BizimHesapB2b\Models\Requests\InvoiceDates;
 use TCGunel\BizimHesapB2b\Models\Requests\InvoiceProduct;
+use TCGunel\BizimHesapB2b\Models\Responses\Photo;
 use TCGunel\BizimHesapB2b\Models\Responses\Product;
 use TCGunel\BizimHesapB2b\Models\Responses\Warehouse;
 use TCGunel\BizimHesapB2b\Tests\TestCase;
@@ -349,7 +350,8 @@ class BizimHesapB2bTest extends TestCase
                                     "variant": "",
                                     "quantity": 0.0,
                                     "brand": "",
-                                    "category": "Hizmet"
+                                    "category": "Hizmet",
+                                    "photo": "[{\"PhotoUrl\":\"https://marketplace-single-product-images.oss-eu-central-1.aliyuncs.com/prod/124314/9dd74850-4830-4fff-966a-e2d07cc43aab/image00051.jpeg\",\"PhotoUrlOriginal\":\"https://marketplace-single-product-images.oss-eu-central-1.aliyuncs.com/prod/124314/9dd74850-4830-4fff-966a-e2d07cc43aab/image00051.jpeg\",\"FlCover\":true},{\"PhotoUrl\":\"https://marketplace-single-product-images.oss-eu-central-1.aliyuncs.com/prod/124314/465ddde3-1c77-4a65-a206-ead547d83cf7/image00078.jpeg\",\"PhotoUrlOriginal\":\"https://marketplace-single-product-images.oss-eu-central-1.aliyuncs.com/prod/124314/465ddde3-1c77-4a65-a206-ead547d83cf7/image00078.jpeg\",\"FlCover\":false}]"
                                 },
                                 {
                                     "id": "8F90D14A75EB40C8AF6D8544466D2BBE",
@@ -384,6 +386,11 @@ class BizimHesapB2bTest extends TestCase
 
         $this->assertNotEmpty($list);
         $this->assertContainsOnlyInstancesOf(Product::class, $list);
+
+        $this->assertNotEmpty($list[0]->photo);
+        $this->assertContainsOnlyInstancesOf(Photo::class, $list[0]->photo);
+
+        $this->assertEmpty($list[1]->photo);
     }
 
     public function test_can_get_products_throws_api_error_exception()

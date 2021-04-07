@@ -28,7 +28,7 @@ class Product extends BaseModel
     /** @var float */
     public $tax;
 
-    /** @var string */
+    /** @var Photo[] */
     public $photo;
 
     /** @var string */
