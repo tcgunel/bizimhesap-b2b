@@ -109,8 +109,8 @@ class BizimHesapB2bTest extends TestCase
         $customer->taxOffice  = $this->faker->realText(10);
         $customer->taxNo      = $this->faker->randomNumber(5);
         $customer->email      = $this->faker->companyEmail;
-        $customer->phone      = $this->faker->phoneNumber;
         $customer->address    = $this->faker->realText(50);
+        $customer->setPhone($this->faker->phoneNumber);
 
         $invoice->customer = $customer;
 

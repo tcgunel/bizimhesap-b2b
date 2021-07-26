@@ -2,6 +2,9 @@
 
 namespace TCGunel\BizimHesapB2b\Models\Requests;
 
+use libphonenumber\PhoneNumberUtil;
+use libphonenumber\RegionCode;
+
 class InvoiceCustomer
 {
     /** @var integer */
@@ -28,5 +31,16 @@ class InvoiceCustomer
     public function __toArray()
     {
         return call_user_func('get_object_vars', $this);
+    }
+
+    public function setPhone($phone)
+    {
+        $phoneNumberUtil = PhoneNumberUtil::getInstance();
+
+        $parsed = $phoneNumberUtil->parseAndKeepRawInput($phone, RegionCode::GB);
+
+        $phone = $parsed->getNationalNumber();
+
+        $this->phone = $phone;
     }
 }

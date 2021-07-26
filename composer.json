@@ -12,7 +12,8 @@
     "require": {
         "php": "^7.2",
         "illuminate/support": "*",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "giggsey/libphonenumber-for-php": "^8.12"
     },
     "minimum-stability": "stable",
     "autoload": {
