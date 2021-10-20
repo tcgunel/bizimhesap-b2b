@@ -40,13 +40,15 @@ class BizimHesapB2bProducts extends BizimHesapB2b
      * @throws Exceptions\BizimHesapB2bException
      * @throws RequestException
      */
-    public function get()
+    public function get(): array
     {
         $response = $this->http_client::withHeaders([
             'token' => $this->token,
         ])->get($this->endpoint);
 
         $this->checkForErrors($response);
+        
+        $result = [];
 
         if ($response->successful()) {
 
