@@ -10,12 +10,24 @@ class BaseModel
 
             if (property_exists($this, $key)) {
 
+				if (method_exists($this, "format_{$key}")){
+
+					$func = "format_{$key}";
+
+					self::$func($arg);
+
+				}
+
                 $this->$key = $arg;
 
             }
 
         }
-
-        return $this;
     }
+
+	protected function format_isActive(&$value){
+
+		$value = (boolean)$value;
+
+	}
 }

@@ -7,6 +7,9 @@ class Product extends BaseModel
     /** @var string */
     public $id;
 
+    /** @var boolean */
+    public $isActive;
+
     /** @var string */
     public $code;
 
@@ -18,6 +21,9 @@ class Product extends BaseModel
 
     /** @var float */
     public $price;
+
+    /** @var float */
+    public $variantPrice;
 
     /** @var string */
     public $currency;
@@ -36,6 +42,9 @@ class Product extends BaseModel
 
     /** @var string */
     public $ecommerceDescription;
+
+    /** @var string */
+    public $variantName;
 
     /** @var string */
     public $variant;
