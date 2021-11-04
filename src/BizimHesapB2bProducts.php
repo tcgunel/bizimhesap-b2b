@@ -7,6 +7,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use TCGunel\BizimHesapB2b\Models\Responses\Photo;
 use TCGunel\BizimHesapB2b\Models\Responses\Product;
+use TCGunel\BizimHesapB2b\Models\Responses\ProductVariant;
+use TCGunel\BizimHesapB2b\Models\Responses\ProductVariantGroup;
 
 class BizimHesapB2bProducts extends BizimHesapB2b
 {
@@ -47,7 +49,7 @@ class BizimHesapB2bProducts extends BizimHesapB2b
         ])->get($this->endpoint);
 
         $this->checkForErrors($response);
-        
+
         $result = [];
 
         if ($response->successful()) {
@@ -73,25 +75,55 @@ class BizimHesapB2bProducts extends BizimHesapB2b
 
         if (isset($collected->get("data")["products"])) {
 
-            $collected->put("products", collect($collected->get("data")["products"])->map(function ($product) {
+			$modifiedProducts = collect($collected->get("data")["products"])->reduce(function ($carry, $product) {
 
-                if (!empty($product["photo"])) {
+				if (!empty($product["photo"])) {
 
-                    $product["photo"] = collect(json_decode($product["photo"], true))->map(function ($photo) {
+					$product["photo"] = collect(json_decode($product["photo"], true))->map(function ($photo) {
 
-                        return new Photo(["is_cover" => !!$photo["FlCover"], "url" => $photo["PhotoUrl"]]);
+						return new Photo(["is_cover" => (boolean)$photo["FlCover"], "url" => $photo["PhotoUrl"]]);
 
 
-                    })->toArray();
+					})->toArray();
 
-                } else {
+				} else {
 
-                    $product["photo"] = [];
+					$product["photo"] = [];
 
-                }
+				}
 
-                return $product;
-            }));
+				$variantName = data_get($product, "variantName");
+
+				if (!empty($variantName)){
+
+					$variant = new ProductVariant([
+						"name"    => $product["variant"],
+						"price"   => !empty(data_get($product, "variantPrice")) ? $product["variantPrice"] : $product["price"],
+						"code"    => $product["code"],
+						"barcode" => $product["barcode"],
+					]);
+
+					if ($found = collect($carry)->where("id", $product["id"])->keys()->first()){
+
+						$carry[$found]["variantGroup"]->variants[] = $variant;
+
+						return $carry;
+
+					}
+
+					$product["variantGroup"] = new ProductVariantGroup([
+						"name"     => $variantName,
+						"variants" => [$variant],
+					]);
+
+				}
+
+				$carry[] = $product;
+
+				return $carry;
+			}, []);
+
+            $collected->put("products", collect($modifiedProducts));
 
         }
 

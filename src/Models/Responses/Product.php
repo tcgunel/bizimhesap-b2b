@@ -22,9 +22,6 @@ class Product extends BaseModel
     /** @var float */
     public $price;
 
-    /** @var float */
-    public $variantPrice;
-
     /** @var string */
     public $currency;
 
@@ -43,12 +40,6 @@ class Product extends BaseModel
     /** @var string */
     public $ecommerceDescription;
 
-    /** @var string */
-    public $variantName;
-
-    /** @var string */
-    public $variant;
-
     /** @var float */
     public $quantity;
 
@@ -57,6 +48,9 @@ class Product extends BaseModel
 
     /** @var string */
     public $category;
+
+    /** @var ProductVariantGroup */
+    public $variantGroup;
 
     public function __construct(array $abstract)
     {

@@ -25,6 +25,8 @@ use TCGunel\BizimHesapB2b\Models\Requests\InvoiceDates;
 use TCGunel\BizimHesapB2b\Models\Requests\InvoiceProduct;
 use TCGunel\BizimHesapB2b\Models\Responses\Photo;
 use TCGunel\BizimHesapB2b\Models\Responses\Product;
+use TCGunel\BizimHesapB2b\Models\Responses\ProductVariant;
+use TCGunel\BizimHesapB2b\Models\Responses\ProductVariantGroup;
 use TCGunel\BizimHesapB2b\Models\Responses\Warehouse;
 use TCGunel\BizimHesapB2b\Tests\TestCase;
 
@@ -376,7 +378,47 @@ class BizimHesapB2bTest extends TestCase
                                     "quantity": 12.000,
                                     "brand": "Örnek",
                                     "category": "Ev Elektroniği"
-                                }
+                                },
+                                {
+							        "id": "F2E5117A93DF487B8607B0501E37DF96",
+							        "isActive": 1,
+							        "code": "G001",
+							        "barcode": "",
+							        "title": "Gömlek",
+							        "price": 35,
+							        "variantPrice": 0,
+							        "currency": "TL",
+							        "unit": "Adet",
+							        "tax": 18,
+							        "photo": "",
+							        "description": "",
+							        "ecommerceDescription": "",
+							        "variantName": "EBAT -- RENK",
+							        "variant": "L-KIRMIZI",
+							        "quantity": 0,
+							        "brand": "",
+							        "category": "Schwarzkopf"
+							      },
+							      {
+							        "id": "F2E5117A93DF487B8607B0501E37DF96",
+							        "isActive": 1,
+							        "code": "G002",
+							        "barcode": "2408925626868",
+							        "title": "GÖMLEK",
+							        "price": 40,
+							        "variantPrice": 4,
+							        "currency": "TL",
+							        "unit": "Adet",
+							        "tax": 18,
+							        "photo": "",
+							        "description": "",
+							        "ecommerceDescription": "",
+							        "variantName": "EBAT -- RENK",
+							        "variant": "L-YESIL",
+							        "quantity": 0,
+							        "brand": "",
+							        "category": "Schwarzkopf"
+							      }
                             ]
                         }
                     }';
@@ -396,6 +438,12 @@ class BizimHesapB2bTest extends TestCase
 
         $this->assertNotEmpty($list[0]->photo);
         $this->assertContainsOnlyInstancesOf(Photo::class, $list[0]->photo);
+
+        $this->assertNotEmpty($list[2]->variantGroup);
+        $this->assertInstanceOf(ProductVariantGroup::class, $list[2]->variantGroup);
+
+        $this->assertNotEmpty($list[2]->variantGroup->variants);
+        $this->assertContainsOnlyInstancesOf(ProductVariant::class, $list[2]->variantGroup->variants);
 
         $this->assertEmpty($list[1]->photo);
     }
