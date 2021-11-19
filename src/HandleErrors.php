@@ -15,8 +15,7 @@ trait HandleErrors
         $body = collect(json_decode($response->body(), true));
 
         $error = "";
-
-        if ($body->contains("resultCode") && $body->get("resultCode") == 0) {
+        if ($body->get("resultCode") === 0) {
 
             $error = $body->get("errorText");
 

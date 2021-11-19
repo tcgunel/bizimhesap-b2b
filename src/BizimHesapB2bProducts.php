@@ -66,7 +66,7 @@ class BizimHesapB2bProducts extends BizimHesapB2b
 
         }
 
-        return $result;
+        return !is_array($result) ? $result->toArray() : $result;
     }
 
     protected function collect(string $response): Collection
