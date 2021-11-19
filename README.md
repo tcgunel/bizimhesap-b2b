@@ -10,7 +10,7 @@ Bizimhesap tüm api metodları için entegrasyon sağlayan pakettir.
 ## Requirements
 | PHP         | Package | Laravel |
 |-------------|---------|---------|
-| ^7.4|^8.0   | v1      | ^7|^8   |
+| ^7.4-^8.0   | v1      | ^7-^8   |
 
 ## Kurulum
 
