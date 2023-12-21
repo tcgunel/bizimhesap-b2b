@@ -21,7 +21,7 @@ class InvoiceDates
      */
     public function setInvoiceDate(Carbon $invoiceDate): InvoiceDates
     {
-        $this->invoiceDate = $invoiceDate->format('Y-m-d\TH:i:s.uP');
+        $this->invoiceDate = $invoiceDate->format('Y-m-d\TH:i:s.u');
 
         return $this;
     }
@@ -32,7 +32,7 @@ class InvoiceDates
      */
     public function setDueDate(Carbon $dueDate): InvoiceDates
     {
-        $this->dueDate = $dueDate->format('Y-m-d\TH:i:s.uP');
+        $this->dueDate = $dueDate->format('Y-m-d\TH:i:s.u');
 
         return $this;
     }
@@ -43,7 +43,7 @@ class InvoiceDates
      */
     public function setDeliveryDate(Carbon $deliveryDate): InvoiceDates
     {
-        $this->deliveryDate = $deliveryDate->format('Y-m-d\TH:i:s.uP');
+        $this->deliveryDate = $deliveryDate->format('Y-m-d\TH:i:s.u');
 
         return $this;
     }
