@@ -62,13 +62,13 @@ class InvoiceProduct
 
     public function calculateValues()
     {
-        $discount_without_tax = $this->round($this->discount - ($this->discount / (1 + ($this->taxRate / 100)) * ($this->taxRate / 100)));
-
         $this->grossPrice = $this->round($this->unitPrice * $this->quantity);
 
-        $this->net = $this->round(($this->grossPrice - ($this->grossPrice / (1 + ($this->taxRate / 100)) * ($this->taxRate / 100))) - $discount_without_tax);
+        $this->net = $this->round($this->grossPrice - ($this->grossPrice / (1 + ($this->taxRate / 100)) * ($this->taxRate / 100)));
 
-        $this->tax = $this->round(($this->grossPrice - $this->discount) - $this->net);
+        $this->tax = $this->round($this->grossPrice - $this->net);
+
+        $this->discount += $this->tax;
 
         $this->total = $this->round($this->net + $this->tax);
     }

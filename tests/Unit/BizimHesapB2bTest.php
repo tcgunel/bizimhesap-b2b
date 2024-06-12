@@ -57,32 +57,32 @@ class BizimHesapB2bTest extends TestCase
     {
         return [
             [
-                // Gross 20000.0 ( Unit * Quantity )
-                // Net 16363.64 ( (Gross - Discount) / ( Tax / 100 + 1 ) )
-                // Tax 1636.36 ( Gross - Discount - Net )
-                // Total 18000.0 ( Net + Tax )
+                // Gross 200.0 ( Unit * Quantity )
+                // Net 181.82 ( Gross / ( Tax / 100 + 1 ) )
+                // Tax 18.18 ( Gross - Net )
+                // Discount 18.18 ( Tax )
+                // Total 200.0 ( Net + Tax )
                 "productId"   => 7,
                 "productName" => "LG TV",
                 "note"        => "",
                 "barcode"     => 7777777,
                 "taxRate"     => 10,
                 "quantity"    => 2,
-                "unitPrice"   => 10000,
-                "discount"    => 2000,
+                "unitPrice"   => 100,
             ],
             [
-                // Gross 1000.0 ( Unit * Quantity )
-                // Net 818.18 ( (Gross - Discount) / ( Tax / 100 + 1 ) )
-                // Tax 81.82 ( Gross - Discount - Net )
-                // Total 900.0 ( Net + Tax )
+                // Gross 10.0 ( Unit * Quantity )
+                // Net 9.09 ( Gross / ( Tax / 100 + 1 ) )
+                // Tax 0.90 ( Gross - Net )
+                // Discount 0.90 ( Gross - Net )
+                // Total 10.0 ( Net + Tax )
                 "productId"   => 8,
                 "productName" => "Kahve Makinası",
                 "note"        => "",
                 "barcode"     => 888888,
                 "taxRate"     => 10,
                 "quantity"    => 1,
-                "unitPrice"   => 1000,
-                "discount"    => 100,
+                "unitPrice"   => 10,
             ],
         ];
     }
@@ -187,23 +187,23 @@ class BizimHesapB2bTest extends TestCase
 
         $add_invoice->run();
 
-        $this->assertEquals(20000.0, $invoice->details[0]->getGrossPrice());
-        $this->assertEquals(16363.64, $invoice->details[0]->getNet());
-        $this->assertEquals(1636.36, $invoice->details[0]->getTax());
-        $this->assertEquals(18000.0, $invoice->details[0]->getTotal());
-        $this->assertEquals(2000, $invoice->details[0]->discount);
+        $this->assertEquals(200.0, $invoice->details[0]->getGrossPrice());
+        $this->assertEquals(181.82, $invoice->details[0]->getNet());
+        $this->assertEquals(18.18, $invoice->details[0]->getTax());
+        $this->assertEquals(200.0, $invoice->details[0]->getTotal());
+        $this->assertEquals(18.18, $invoice->details[0]->discount);
 
-        $this->assertEquals(1000.0, $invoice->details[1]->getGrossPrice());
-        $this->assertEquals(818.18, $invoice->details[1]->getNet());
-        $this->assertEquals(81.82, $invoice->details[1]->getTax());
-        $this->assertEquals(900.0, $invoice->details[1]->getTotal());
-        $this->assertEquals(100, $invoice->details[1]->discount);
+        $this->assertEquals(10.0, $invoice->details[1]->getGrossPrice());
+        $this->assertEquals(9.09, $invoice->details[1]->getNet());
+        $this->assertEquals(0.91, $invoice->details[1]->getTax());
+        $this->assertEquals(10.0, $invoice->details[1]->getTotal());
+        $this->assertEquals(0.91, $invoice->details[1]->discount);
 
-        $this->assertEquals(21000.0, $invoice->amounts->getGross());
-        $this->assertEquals(2100, $invoice->amounts->getDiscount());
-        $this->assertEquals(1718.18, $invoice->amounts->getTax());
-        $this->assertEquals(17181.82, $invoice->amounts->getNet());
-        $this->assertEquals(18900.0, $invoice->amounts->getTotal());
+        $this->assertEquals(210.0, $invoice->amounts->getGross());
+        $this->assertEquals(19.09, $invoice->amounts->getDiscount());
+        $this->assertEquals(19.09, $invoice->amounts->getTax());
+        $this->assertEquals(190.91, $invoice->amounts->getNet());
+        $this->assertEquals(210, $invoice->amounts->getTotal());
     }
 
     public function test_can_add_invoice_throws_api_error_exception()

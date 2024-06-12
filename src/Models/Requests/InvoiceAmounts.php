@@ -45,7 +45,7 @@ class InvoiceAmounts
 
             $this->gross += $invoice_product->getGrossPrice();
 
-            $this->discount += $invoice_product->discount;
+            $this->discount += $invoice_product->getTax();
 
             $this->net += $invoice_product->getNet();
 
