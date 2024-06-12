@@ -12,7 +12,7 @@ class BizimHesapB2bInventory extends BizimHesapB2b
 {
     use HandleErrors;
 
-    protected $endpoint = "https://bizimhesap.com/api/b2b/warehouses/{warehouse-id}";
+    protected $endpoint = "https://bizimhesap.com/api/b2b/inventory/{warehouse-id}";
 
     protected $warehouse_id;
 
